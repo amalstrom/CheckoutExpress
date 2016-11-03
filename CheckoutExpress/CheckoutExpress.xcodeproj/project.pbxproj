@@ -12,6 +12,7 @@
 		D148AE281DC80028002C8380 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D148AE261DC80028002C8380 /* Main.storyboard */; };
 		D148AE2A1DC80028002C8380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D148AE291DC80028002C8380 /* Assets.xcassets */; };
 		D148AE2D1DC80028002C8380 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D148AE2B1DC80028002C8380 /* LaunchScreen.storyboard */; };
+		D1DD766E1DCA2C010006299D /* BarcodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD766D1DCA2C010006299D /* BarcodeReaderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		D148AE291DC80028002C8380 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D148AE2C1DC80028002C8380 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D148AE2E1DC80028002C8380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1DD766D1DCA2C010006299D /* BarcodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				D148AE221DC80028002C8380 /* AppDelegate.swift */,
 				D148AE241DC80028002C8380 /* ViewController.swift */,
+				D1DD766D1DCA2C010006299D /* BarcodeReaderViewController.swift */,
 				D148AE261DC80028002C8380 /* Main.storyboard */,
 				D148AE291DC80028002C8380 /* Assets.xcassets */,
 				D148AE2B1DC80028002C8380 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				D148AE251DC80028002C8380 /* ViewController.swift in Sources */,
 				D148AE231DC80028002C8380 /* AppDelegate.swift in Sources */,
+				D1DD766E1DCA2C010006299D /* BarcodeReaderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +293,7 @@
 				D148AE331DC80028002C8380 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
