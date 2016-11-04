@@ -42,6 +42,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
     }
     
 	func setupCapture(){
+		self.captureSession = AVCaptureSession()
 		// Set the captureDevice to currently running device
 		let videoCaptureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
 		// Object for receiving inputs from captureDevice
@@ -54,9 +55,11 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
 			return
 		}
 		
+		print(self.captureSession)
 		// If there is an input to be added to the captureSession, add it
 		// Same for adding output to the captureSession
 		if let captureSession = self.captureSession{
+			print(self.captureSession)
 			if (captureSession.canAddInput(videoInput)) {
 				captureSession.addInput(videoInput)
 			} else {
@@ -72,7 +75,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
 				// Send captured data to the delegate object via a serial queue
 				captureMetadataOutput.setMetadataObjectsDelegate(self, queue: dispatch_get_main_queue())
 				// Set barcode type to: EAN-13
-				captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeEAN13Code]
+				captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code]
 			}
 			
 			if (captureSession.canAddOutput(captureMetadataOutput)) {
@@ -83,7 +86,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
 				
 				// Set barcode type for which to scan: EAN-13.
 				// Note: EAN-13 is UPC-A with 0 added in the beginning
-				captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeEAN13Code]
+				captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeEAN13Code, avmetadataobjecttype]
 				
 			} else {
 				self.alertScanNotAvailable()
