@@ -1,5 +1,7 @@
 import UIKit
 import AVFoundation
+import Alamofire
+import SwiftyJSON
 
 class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     
@@ -102,11 +104,23 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         present(alert, animated: true, completion: nil)
         session = nil
     }
+    func searchAPI(codeNumber: String) {
+        let url_var = "http://api.walmartlabs.com/v1/items?apiKey=yfahd49q5ahmbr5wjv4arrk8&upc=\(codeNumber)"
+        Alamofire.request(url_var, method: .get)
+            .responseJSON { response in
+                var json = JSON(response.result.value!)
+                let item_title = "\(json["items"][0]["name"])"
+                print(item_title)
+                let item_img = "\(json["items"][0]["thumbnailImage"])"
+                let item_price = "\(json["items"][0]["salePrice"])"
+        }
+        
+    }
     func barcodeDetected(code: String) {
         print("detected")
         // Let the user know we've found something.
         let alert = UIAlertController(title: "Found a Barcode!", message: code, preferredStyle: UIAlertControllerStyle.alert)
-        alert.addAction(UIAlertAction(title: "Search", style: UIAlertActionStyle.destructive, handler: { action in
+        alert.addAction(UIAlertAction(title: "Add Item?", style: UIAlertActionStyle.destructive, handler: { action in
             
             // Remove the spaces.
             let trimmedCode = code.trimmingCharacters(in: NSCharacterSet.whitespaces)
@@ -116,16 +130,18 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             
             let trimmedCodeString = "\(trimmedCode)"
             var trimmedCodeNoZero: String
-            print("test")
+            
+            //let ViewController = MainViewController()
+            //let return_to_base = UIStoryboardSegue(identifier: "barcode_detected", source: self, destination: ViewController)
+            //return_to_base.perform()
+            
             if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
                 trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
-                
+                self.searchAPI(codeNumber: trimmedCodeNoZero)
+                self.performSegue(withIdentifier: "GoBack", sender: self)
                 // Send the doctored UPC to DataService.searchAPI()
-                print("case 1")
             } else {
-                
                 // Send the doctored EAN to DataService.searchAPI()
-                print("case 2")
             }
             
             self.navigationController?.popViewController(animated: true)
