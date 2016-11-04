@@ -102,7 +102,8 @@
 				TargetAttributes = {
 					D148AE1E1DC80028002C8380 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 4W227SQZ26;
+						DevelopmentTeam = 795MLN7C5M;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -260,10 +261,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 795MLN7C5M;
 				INFOPLIST_FILE = CheckoutExpress/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ce.CheckoutExpress;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -271,10 +274,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 795MLN7C5M;
 				INFOPLIST_FILE = CheckoutExpress/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ce.CheckoutExpress;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
