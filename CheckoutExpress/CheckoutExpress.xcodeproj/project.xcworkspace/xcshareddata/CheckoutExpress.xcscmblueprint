@@ -10,7 +10,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5E5EE3A6-3BDF-4299-BB35-56E43EFB81C9",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "SwiftyJSON\/",
-    "4C85B74651B8FA1D2A3BCFDCDA71BE191B0D1BD3" : "checkout_express\/"
+    "4C85B74651B8FA1D2A3BCFDCDA71BE191B0D1BD3" : "CheckoutExpress\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "CheckoutExpress",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,

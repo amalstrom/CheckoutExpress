@@ -8,8 +8,9 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
 	
+	var items: [Item] = []
+	
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
         if (session?.isRunning == false) {
             session.startRunning()
@@ -80,6 +81,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         
         
     }
+	// Called when the camera captures something, sends output
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
                 // Get the first object from the metadataObjects array.
                 if let barcodeData = metadataObjects.first {
@@ -104,18 +106,6 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         present(alert, animated: true, completion: nil)
         session = nil
     }
-    func searchAPI(codeNumber: String) {
-        let url_var = "http://api.walmartlabs.com/v1/items?apiKey=yfahd49q5ahmbr5wjv4arrk8&upc=\(codeNumber)"
-        Alamofire.request(url_var, method: .get)
-            .responseJSON { response in
-                var json = JSON(response.result.value!)
-                let item_title = "\(json["items"][0]["name"])"
-                print(item_title)
-                let item_img = "\(json["items"][0]["thumbnailImage"])"
-                let item_price = "\(json["items"][0]["salePrice"])"
-        }
-        
-    }
     func barcodeDetected(code: String) {
         print("detected")
         // Let the user know we've found something.
@@ -131,23 +121,42 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             let trimmedCodeString = "\(trimmedCode)"
             var trimmedCodeNoZero: String
             
-            //let ViewController = MainViewController()
-            //let return_to_base = UIStoryboardSegue(identifier: "barcode_detected", source: self, destination: ViewController)
-            //return_to_base.perform()
-            
             if trimmedCodeString.hasPrefix("0") && trimmedCodeString.characters.count > 1 {
                 trimmedCodeNoZero = String(trimmedCodeString.characters.dropFirst())
                 self.searchAPI(codeNumber: trimmedCodeNoZero)
-                self.performSegue(withIdentifier: "GoBack", sender: self)
                 // Send the doctored UPC to DataService.searchAPI()
             } else {
                 // Send the doctored EAN to DataService.searchAPI()
             }
-            
-            self.navigationController?.popViewController(animated: true)
+			
         }))
-        
         self.present(alert, animated: true, completion: nil)
     }
+	func searchAPI(codeNumber: String) {
+		print("searchAPI called")
+		let url_var = "http://api.walmartlabs.com/v1/items?apiKey=yfahd49q5ahmbr5wjv4arrk8&upc=\(codeNumber)"
+		Alamofire.request(url_var, method: .get)
+			.responseJSON { response in
+				var json = JSON(response.result.value!)
+				let item_title = "\(json["items"][0]["name"])"
+				let item_img = "\(json["items"][0]["thumbnailImage"])"
+				let item_price = "\(json["items"][0]["salePrice"])"
+				print(item_title)
+				print(item_img)
+				print(item_price)
+				let imageURL = NSURL(string: item_img)
+				let imageData = NSData(contentsOf: imageURL as! URL)
+				let newItem = Item(name: item_title, price: item_price, image: UIImage(data: imageData as! Data)!)
+				self.items.append(newItem)
+				
+				self.performSegue(withIdentifier: "BackToMain", sender: self)
+		}
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let destVC = segue.destination as? MainViewController{
+			destVC.items = self.items
+		}
+	}
 }
 
