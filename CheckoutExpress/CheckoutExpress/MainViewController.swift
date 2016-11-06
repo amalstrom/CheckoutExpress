@@ -18,6 +18,8 @@ class ItemTableViewCell: UITableViewCell{
 	@IBOutlet weak var priceLabel: UILabel!
 	@IBOutlet weak var titleLabel: UILabel!
 	@IBOutlet weak var itemImageView: UIImageView!
+
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Initialization code
@@ -47,6 +49,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	@IBOutlet weak var itemsTableView: UITableView!
 
 	var items: [Item] = []
+	var total: Double = 0.0{
+		didSet{
+			self.totalPriceLabel.text = "Total: $ " + String(total)
+		}
+	}
 	
 	override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,15 +100,24 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		}
 	}
 	func calculateTotal(){
-		var total: Double = 0
+		self.total = 0
 		for i in self.items{
-			total += Double(i.price)!
+			self.total += Double(i.price)!
 		}
-		self.totalPriceLabel.text = "Total: $ " + String(total)
+//		self.totalPriceLabel.text = "Total: $ " + String(total)
 	}
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let destVC = segue.destination as? BarcodeReaderViewController{
-			destVC.items = self.items
+		if segue.identifier == "MoveToBarcode"{
+			if let destVC = segue.destination as? BarcodeReaderViewController{
+				destVC.items = self.items
+			}
+		}
+		else{
+			if let destVC = segue.destination as? CompleteTransactionViewController{
+				destVC.subtotal = self.total
+				destVC.tax = self.total * 0.06
+				destVC.total = self.total + self.total * 0.06
+			}
 		}
 	}
 }
