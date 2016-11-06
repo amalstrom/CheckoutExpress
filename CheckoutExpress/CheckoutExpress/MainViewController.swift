@@ -29,13 +29,21 @@ class ItemTableViewCell: UITableViewCell{
 	}
 	func initialize(title: String, price: String, image: UIImage){
 		self.titleLabel.text = title
-		self.priceLabel.text = price
+		self.priceLabel.text = "$ " + price
 		self.itemImageView.image = image
 	}
 }
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+	@IBOutlet weak var checkoutButton: UIButton!{
+		didSet{
+			checkoutButton.backgroundColor = UIColor.black
+			checkoutButton.setTitleColor(UIColor.white, for: .normal)
+			checkoutButton.setTitle("CHECKOUT", for: .normal)
+		}
+	}
+	@IBOutlet weak var totalPriceLabel: UILabel!
 	@IBOutlet weak var itemsTableView: UITableView!
 
 	var items: [Item] = []
@@ -57,6 +65,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		print("viewwillappear")
 		self.itemsTableView.reloadData()
 		print(items)
+		calculateTotal()
 	}
 	
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -71,7 +80,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		let item = items[indexPath.row]
 		cell?.initialize(title: item.name, price: item.price, image: item.image)
 		
-		
 		return cell!
 	}
 	func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -81,9 +89,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		if editingStyle == UITableViewCellEditingStyle.delete{
 			self.items.remove(at: indexPath.row)
 			self.itemsTableView.deleteRows(at: [indexPath], with: .automatic)
+			self.calculateTotal()
 		}
 	}
-	
+	func calculateTotal(){
+		var total: Double = 0
+		for i in self.items{
+			total += Double(i.price)!
+		}
+		self.totalPriceLabel.text = "Total: $ " + String(total)
+	}
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let destVC = segue.destination as? BarcodeReaderViewController{
 			destVC.items = self.items
