@@ -66,9 +66,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         } else {
             scanningNotPossible()
         }
-            
-        
-    
+	
         previewLayer = AVCaptureVideoPreviewLayer(session: session);
         previewLayer.frame = view.layer.bounds;
         previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
@@ -77,9 +75,6 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         // Begin the capture session.
         
         session.startRunning()
-
-        
-        
     }
 	// Called when the camera captures something, sends output
     func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
@@ -107,7 +102,6 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         session = nil
     }
     func barcodeDetected(code: String) {
-        print("detected")
         // Let the user know we've found something.
         let alert = UIAlertController(title: "Found a Barcode!", message: code, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Add Item?", style: UIAlertActionStyle.destructive, handler: { action in
@@ -117,7 +111,6 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
             
             // EAN or UPC?
             // Check for added "0" at beginning of code.
-            
             let trimmedCodeString = "\(trimmedCode)"
             var trimmedCodeNoZero: String
             
@@ -132,8 +125,11 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
         }))
         self.present(alert, animated: true, completion: nil)
     }
+	
+	
+	
+	
 	func searchAPI(codeNumber: String) {
-		print("searchAPI called")
 		let url_var = "http://api.walmartlabs.com/v1/items?apiKey=yfahd49q5ahmbr5wjv4arrk8&upc=\(codeNumber)"
 		Alamofire.request(url_var, method: .get)
 			.responseJSON { response in
@@ -141,18 +137,13 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
 				let item_title = "\(json["items"][0]["name"])"
 				let item_img = "\(json["items"][0]["thumbnailImage"])"
 				let item_price = "\(json["items"][0]["salePrice"])"
-				print(item_title)
-				print(item_img)
-				print(item_price)
-				let imageURL = NSURL(string: item_img)
-				let imageData = NSData(contentsOf: imageURL as! URL)
-				let newItem = Item(name: item_title, price: item_price, image: UIImage(data: imageData as! Data)!)
+				let newItem = Item(name: item_title, price: Double(item_price)!, imageURL: item_img)
 				self.items.append(newItem)
 				
 				self.performSegue(withIdentifier: "BackToMain", sender: self)
 		}
 	}
-	
+
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let destVC = segue.destination as? MainViewController{
 			destVC.items = self.items

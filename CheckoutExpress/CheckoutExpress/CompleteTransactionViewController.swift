@@ -33,18 +33,28 @@ class CompleteTransactionViewController: UIViewController {
 		}
 	}
 	
-	var subtotal: Double = 0
-	var tax: Double = 0
-	var total: Double = 0
+	var subtotal: Double = 0{
+		willSet{
+			self.subtotalLabel.text = "$ " + String(round(100*newValue)/100)
+		}
+	}
+	var tax: Double = 0{
+		willSet{
+			self.taxLabel.text = "$ " + String(round(100*newValue)/100)
+		}
+	}
+	var total: Double = 0{
+		willSet{
+			self.totalLabel.text = "$ " + String(round(100*newValue)/100)
+		}
+	}
 	
+	var items: [Item] = []
 	
     override func viewDidLoad() {
         super.viewDidLoad()
 		
         // Do any additional setup after loading the view.
-		self.subtotalLabel.text = "$ " + String(round(100*subtotal)/100)
-		self.taxLabel.text = "$ " + String(round(100*tax)/100)
-		self.totalLabel.text = "$ " + String(round(100*total)/100)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +62,15 @@ class CompleteTransactionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+	func updateTotal(){
+		var tmpSubtotal: Double = 0
+		for item in items{
+			tmpSubtotal += item.price
+		}
+		self.subtotal = tmpSubtotal
+		self.tax = tmpSubtotal * 0.06
+		self.total = self.subtotal + self.tax
+	}
     /*
     // MARK: - Navigation
 

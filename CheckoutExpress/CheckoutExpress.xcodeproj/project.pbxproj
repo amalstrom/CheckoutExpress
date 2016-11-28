@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		D148AE231DC80028002C8380 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148AE221DC80028002C8380 /* AppDelegate.swift */; };
-		D148AE251DC80028002C8380 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148AE241DC80028002C8380 /* ViewController.swift */; };
 		D148AE281DC80028002C8380 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D148AE261DC80028002C8380 /* Main.storyboard */; };
 		D148AE2A1DC80028002C8380 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D148AE291DC80028002C8380 /* Assets.xcassets */; };
 		D148AE2D1DC80028002C8380 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D148AE2B1DC80028002C8380 /* LaunchScreen.storyboard */; };
 		D1A50EE01DCFBA8000510111 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1A50ECA1DCFBA6600510111 /* SwiftyJSON.framework */; };
 		D1A50EE11DCFBA8000510111 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1A50ECA1DCFBA6600510111 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D1A50EEC1DCFCBA300510111 /* CompleteTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A50EEB1DCFCBA300510111 /* CompleteTransactionViewController.swift */; };
 		D1DD766E1DCA2C010006299D /* BarcodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD766D1DCA2C010006299D /* BarcodeReaderViewController.swift */; };
 		D1DEB7551DCEB455003A764F /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D1DEB7481DCEB42A003A764F /* Alamofire.framework */; };
 		D1DEB7561DCEB455003A764F /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D1DEB7481DCEB42A003A764F /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -153,12 +153,12 @@
 /* Begin PBXFileReference section */
 		D148AE1F1DC80028002C8380 /* CheckoutExpress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckoutExpress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D148AE221DC80028002C8380 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D148AE241DC80028002C8380 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D148AE271DC80028002C8380 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D148AE291DC80028002C8380 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D148AE2C1DC80028002C8380 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D148AE2E1DC80028002C8380 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1A50EB81DCFBA6200510111 /* SwiftyJSON.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftyJSON.xcodeproj; path = SwiftyJSON/SwiftyJSON.xcodeproj; sourceTree = "<group>"; };
+		D1A50EEB1DCFCBA300510111 /* CompleteTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteTransactionViewController.swift; sourceTree = "<group>"; };
 		D1DD766D1DCA2C010006299D /* BarcodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeReaderViewController.swift; sourceTree = "<group>"; };
 		D1DEB73C1DCEB42A003A764F /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = Alamofire/Alamofire.xcodeproj; sourceTree = "<group>"; };
 		D1FE40521DCBFF870080B484 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -199,9 +199,9 @@
 			isa = PBXGroup;
 			children = (
 				D148AE221DC80028002C8380 /* AppDelegate.swift */,
-				D148AE241DC80028002C8380 /* ViewController.swift */,
 				D1FE40521DCBFF870080B484 /* MainViewController.swift */,
 				D1DD766D1DCA2C010006299D /* BarcodeReaderViewController.swift */,
+				D1A50EEB1DCFCBA300510111 /* CompleteTransactionViewController.swift */,
 				D148AE261DC80028002C8380 /* Main.storyboard */,
 				D148AE291DC80028002C8380 /* Assets.xcassets */,
 				D148AE2B1DC80028002C8380 /* LaunchScreen.storyboard */,
@@ -426,9 +426,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D148AE251DC80028002C8380 /* ViewController.swift in Sources */,
 				D148AE231DC80028002C8380 /* AppDelegate.swift in Sources */,
 				D1DD766E1DCA2C010006299D /* BarcodeReaderViewController.swift in Sources */,
+				D1A50EEC1DCFCBA300510111 /* CompleteTransactionViewController.swift in Sources */,
 				D1FE40531DCBFF870080B484 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

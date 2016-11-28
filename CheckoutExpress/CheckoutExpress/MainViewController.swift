@@ -10,8 +10,27 @@ import UIKit
 
 struct Item{
 	var name: String
-	var price: String
-	var image: UIImage
+	var price: Double
+//	var quantity: Int
+	var image: UIImage?
+	
+	init(name: String, price: Double, imageURL: String){
+		self.name = name
+		self.price = price
+		do{
+			try self.image = UIImage(data: Data(contentsOf: URL(string: imageURL)!))!
+		}
+		catch{
+			print("error")
+			self.image = UIImage()
+		}
+	}
+	func getPrice() -> String{
+		return String(describing: price)
+	}
+//	func getQuantity() -> String{
+//		return String(quantity)
+//	}
 }
 
 class ItemTableViewCell: UITableViewCell{
@@ -29,10 +48,10 @@ class ItemTableViewCell: UITableViewCell{
 		super.setSelected(selected, animated: animated)
 		// Configure the view for the selected state
 	}
-	func initialize(title: String, price: String, image: UIImage){
-		self.titleLabel.text = title
-		self.priceLabel.text = "$ " + price
-		self.itemImageView.image = image
+	func updateValues(item: Item){
+		self.titleLabel.text = item.name
+		self.priceLabel.text = "$ " + String(item.price)
+		self.itemImageView.image = item.image
 	}
 }
 
@@ -55,6 +74,14 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		}
 	}
 	
+	
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.itemsTableView.reloadData()
+		self.updateTotal()
+	}
+	
 	override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -67,14 +94,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
 	
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		print("viewwillappear")
-		self.itemsTableView.reloadData()
-		print(items)
-		calculateTotal()
-	}
 	
+	
+	// UITableView Delegate methods
 	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
 		return 1
 	}
@@ -82,10 +104,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		return items.count
 	}
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		print("cellforrow")
+		
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell") as? ItemTableViewCell
 		let item = items[indexPath.row]
-		cell?.initialize(title: item.name, price: item.price, image: item.image)
+		cell?.updateValues(item: item)
 		
 		return cell!
 	}
@@ -96,15 +118,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		if editingStyle == UITableViewCellEditingStyle.delete{
 			self.items.remove(at: indexPath.row)
 			self.itemsTableView.deleteRows(at: [indexPath], with: .automatic)
-			self.calculateTotal()
+			self.updateTotal()
 		}
 	}
-	func calculateTotal(){
-		self.total = 0
-		for i in self.items{
-			self.total += Double(i.price)!
+	func updateTotal(){
+		var newTotal: Double = 0
+		for item in self.items{
+			newTotal += item.price
 		}
-//		self.totalPriceLabel.text = "Total: $ " + String(total)
+		self.total = newTotal
 	}
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if segue.identifier == "MoveToBarcode"{
@@ -114,9 +136,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
 		}
 		else{
 			if let destVC = segue.destination as? CompleteTransactionViewController{
-				destVC.subtotal = self.total
-				destVC.tax = self.total * 0.06
-				destVC.total = self.total + self.total * 0.06
+				destVC.items = self.items
 			}
 		}
 	}
