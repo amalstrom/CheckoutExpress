@@ -35,17 +35,17 @@ class CompleteTransactionViewController: UIViewController {
 	
 	var subtotal: Double = 0{
 		willSet{
-			self.subtotalLabel.text = "$ " + String(round(100*newValue)/100)
+			self.subtotalLabel.text = "$ " + Utility.formatPrice(price: newValue)
 		}
 	}
 	var tax: Double = 0{
 		willSet{
-			self.taxLabel.text = "$ " + String(round(100*newValue)/100)
+			self.taxLabel.text = "$ " + Utility.formatPrice(price: newValue)
 		}
 	}
 	var total: Double = 0{
 		willSet{
-			self.totalLabel.text = "$ " + String(round(100*newValue)/100)
+			self.totalLabel.text = "$ " + Utility.formatPrice(price: newValue)
 		}
 	}
 	
@@ -55,6 +55,7 @@ class CompleteTransactionViewController: UIViewController {
         super.viewDidLoad()
 		
         // Do any additional setup after loading the view.
+		self.updateTotals()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,7 +63,7 @@ class CompleteTransactionViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-	func updateTotal(){
+	func updateTotals(){
 		var tmpSubtotal: Double = 0
 		for item in items{
 			tmpSubtotal += item.price
@@ -71,14 +72,5 @@ class CompleteTransactionViewController: UIViewController {
 		self.tax = tmpSubtotal * 0.06
 		self.total = self.subtotal + self.tax
 	}
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

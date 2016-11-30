@@ -4,7 +4,9 @@ import Alamofire
 import SwiftyJSON
 
 class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
-    
+	
+	private let APIKEY = "yfahd49q5ahmbr5wjv4arrk8"
+	
     var session: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
 	
@@ -130,7 +132,7 @@ class BarcodeReaderViewController: UIViewController, AVCaptureMetadataOutputObje
 	
 	
 	func searchAPI(codeNumber: String) {
-		let url_var = "http://api.walmartlabs.com/v1/items?apiKey=yfahd49q5ahmbr5wjv4arrk8&upc=\(codeNumber)"
+		let url_var = "http://api.walmartlabs.com/v1/items?apiKey=\(APIKEY)&upc=\(codeNumber)"
 		Alamofire.request(url_var, method: .get)
 			.responseJSON { response in
 				var json = JSON(response.result.value!)
